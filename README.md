@@ -13,6 +13,15 @@ bower install angular-breadcrumbs
 usage
 -----
 
+Make sure you include the module in your application config
+
+```
+angular.module('myApp', [
+  'breadcrumbs',
+  ...
+]);
+```
+
 Insert the directive anywhere in your html view
 
 ```
