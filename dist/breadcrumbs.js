@@ -30,7 +30,7 @@
         element.css({
           position: 'relative'
         });
-        element.find('span').css({
+        element.find('span.breadcrumb').css({
           position: 'absolute',
           right: 0,
           top: 0
