@@ -24,9 +24,17 @@
                       </ng-switch>\
                     </li>\
                   </ul>\
-                  <div ng-transclude></div>\
+                  <span ng-transclude class="breadcrumb"></span>\
                 </div>',
       link: function(scope, element, attrs) {
+        element.css({
+          position: 'relative'
+        });
+        element.find('span').css({
+          position: 'absolute',
+          right: 0,
+          top: 0
+        });
         return $rootScope.$on('$routeChangeSuccess', function() {
           var paths;
           if ($location.path() === '/') {

@@ -14,17 +14,25 @@ describe 'Directive: breadcrumbs', ->
         $get: -> $location
       null
 
-  beforeEach inject ($rootScope, $compile) ->
+  beforeEach inject ($rootScope) ->
     scope = $rootScope.$new()
     element = angular.element '<breadcrumbs></breadcrumbs>'
-    element = $compile(element) scope
 
-  it 'should have an unordered list with the class breadcrumbs', ->
-    expect(element.find('ul').length).not.toEqual 0
-    expect(element.find('ul').hasClass('breadcrumb')).toBeTruthy()
+  describe 'when creating the markup', ->
+    beforeEach inject ($compile) ->
+      element = $compile(element) scope
+
+    it 'should be positioned relative for transcluded elements', ->
+      expect(element.css('position')).toEqual 'relative'
+
+    it 'should have an unordered list with the class breadcrumbs', ->
+      expect(element.find('ul').length).not.toEqual 0
+      expect(element.find('ul').hasClass('breadcrumb')).toBeTruthy()
 
   describe 'when the location is at the root of the app', ->
-    beforeEach inject ($rootScope) ->
+    beforeEach inject ($rootScope, $compile) ->
+      element = $compile(element) scope
+
       $location.path.andReturn '/'
       $rootScope.$emit '$routeChangeSuccess'
       scope.$digest()
@@ -39,7 +47,9 @@ describe 'Directive: breadcrumbs', ->
       expect(element.find('.divider').length).toEqual 0
 
   describe 'when the location is deep', ->
-    beforeEach inject ($rootScope) ->
+    beforeEach inject ($rootScope, $compile) ->
+      element = $compile(element) scope
+
       $location.path.andReturn '/Google/Apps/Gmail'
       $rootScope.$emit '$routeChangeSuccess'
       scope.$digest()
@@ -65,10 +75,18 @@ describe 'Directive: breadcrumbs', ->
       expect(element.find('li:nth-child(4) span').last().text()).toEqual 'Gmail'
       expect(element.find('li:nth-child(4) span:last-child a').length).toEqual 0
 
-    describe 'when there are nested elements tp be transcluded', ->
-      beforeEach inject ($compile) ->
-        element = angular.element '<breadcrumbs><span>Logout</span></breadcrumbs>'
-        element = $compile(element) scope
+  describe 'when there are nested elements to be transcluded', ->
+    beforeEach inject ($compile) ->
+      element = angular.element '<breadcrumbs><span>Logout</span></breadcrumbs>'
+      element = $compile(element) scope
 
-      it 'should transclude', ->
-        expect(element.find('span').text()).toEqual 'Logout'
+    it 'should have the breadcrumb class', ->
+      expect(element.find('span').hasClass('breadcrumb')).toBeTruthy()
+
+    it 'should have correct styles to inline the nest elements', ->
+      expect(element.find('span').css('position')).toEqual 'absolute'
+      expect(element.find('span').css('top')).toEqual '0px'
+      expect(element.find('span').css('right')).toEqual '0px'
+
+    it 'should transclude', ->
+      expect(element.find('span.breadcrumb').text()).toEqual 'Logout'

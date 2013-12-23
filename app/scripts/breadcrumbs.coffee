@@ -24,9 +24,16 @@ angular.module('breadcrumbs')
                       </ng-switch>
                     </li>
                   </ul>
-                  <div ng-transclude></div>
+                  <span ng-transclude class="breadcrumb"></span>
                 </div>'
     link: (scope, element, attrs) ->
+      # Styles so we can nest elements transcluded
+      element.css position: 'relative'
+      element.find('span').css
+        position: 'absolute'
+        right:    0
+        top:      0
+
       $rootScope.$on '$routeChangeSuccess', ->
         if $location.path() == '/'
           scope.breadcrumbs = [] 
