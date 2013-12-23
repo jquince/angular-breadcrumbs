@@ -5,23 +5,27 @@
   angular.module('breadcrumbs').directive('breadcrumbs', function($rootScope, $location) {
     return {
       replace: true,
-      scope: {},
-      template: '<ul class="breadcrumb">\
-                <li>\
-                  <ng-switch on="breadcrumbs.length === 0">\
-                    <span ng-switch-when="true">Home</span>\
-                    <span ng-switch-default><a href="/">Home</a></span>\
-                  </ng-switch>\
-                </li>\
-                <li ng-repeat="breadcrumb in breadcrumbs">\
-                  <span class="divider">/</span>\
-                  <ng-switch on="$last">\
-                    <span ng-switch-when="true">{{breadcrumb.path}}</span>\
-                    <span ng-switch-default><a href="{{breadcrumb.url}}">{{breadcrumb.path}}</a></span>\
-                  </ng-switch>\
-                </li>\
-              </ul>',
+      transclude: true,
       restrict: 'E',
+      scope: {},
+      template: '<div>\
+                  <ul class="breadcrumb">\
+                    <li>\
+                      <ng-switch on="breadcrumbs.length === 0">\
+                        <span ng-switch-when="true">Home</span>\
+                        <span ng-switch-default><a href="/">Home</a></span>\
+                      </ng-switch>\
+                    </li>\
+                    <li ng-repeat="breadcrumb in breadcrumbs">\
+                      <span class="divider">/</span>\
+                      <ng-switch on="$last">\
+                        <span ng-switch-when="true">{{breadcrumb.path}}</span>\
+                        <span ng-switch-default><a href="{{breadcrumb.url}}">{{breadcrumb.path}}</a></span>\
+                      </ng-switch>\
+                    </li>\
+                  </ul>\
+                  <div ng-transclude></div>\
+                </div>',
       link: function(scope, element, attrs) {
         return $rootScope.$on('$routeChangeSuccess', function() {
           var paths;
