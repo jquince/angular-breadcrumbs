@@ -29,7 +29,7 @@ angular.module('breadcrumbs')
     link: (scope, element, attrs) ->
       # Styles so we can nest elements transcluded
       element.css position: 'relative'
-      element.find('span').css
+      element.find('span.breadcrumb').css
         position: 'absolute'
         right:    0
         top:      0
