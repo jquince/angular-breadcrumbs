@@ -20,8 +20,8 @@ describe 'Directive: breadcrumbs', ->
     element = $compile(element) scope
 
   it 'should have an unordered list with the class breadcrumbs', ->
-    expect(element[0].tagName).toEqual 'UL'
-    expect(element.hasClass('breadcrumb')).toBeTruthy()
+    expect(element.find('ul').length).not.toEqual 0
+    expect(element.find('ul').hasClass('breadcrumb')).toBeTruthy()
 
   describe 'when the location is at the root of the app', ->
     beforeEach inject ($rootScope) ->
@@ -64,3 +64,11 @@ describe 'Directive: breadcrumbs', ->
       expect(element.find('li:nth-child(4) span').first().text()).toEqual '/'
       expect(element.find('li:nth-child(4) span').last().text()).toEqual 'Gmail'
       expect(element.find('li:nth-child(4) span:last-child a').length).toEqual 0
+
+    describe 'when there are nested elements tp be transcluded', ->
+      beforeEach inject ($compile) ->
+        element = angular.element '<breadcrumbs><span>Logout</span></breadcrumbs>'
+        element = $compile(element) scope
+
+      it 'should transclude', ->
+        expect(element.find('span').text()).toEqual 'Logout'
