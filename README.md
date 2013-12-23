@@ -28,4 +28,10 @@ Insert the directive anywhere in your html view
 <breadcrumbs></breadcrumbs>
 ```
 
+Alternatively you can include elements, which will be pulled to the right hand side, beside the breadcrumbs
+```
+<breadcrumbs><a href="#" ng-click="logout()"></a></breadcrumbs>
+```
+
 If bootstrap is included the directive will be styled for you already, however this is not required for the directive to work
+
