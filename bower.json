@@ -1,6 +1,6 @@
 {
   "name": "angular-breadcrumbs",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "dist/breadcrumbs.js",
   "dependencies": {
     "angular": "1.2.4",
