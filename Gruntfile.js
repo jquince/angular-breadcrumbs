@@ -156,7 +156,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           dot: true,
-          cwd: '.tmp/scripts',
+          cwd: '<%= yeoman.app %>/scripts',
           dest: '<%= yeoman.dist %>',
           src: [
             '*.js'
@@ -232,14 +232,12 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', [
     'clean:server',
-    'concurrent:test',
     'connect:test',
     'karma'
   ]);
 
   grunt.registerTask('build', [
     'clean:dist',
-    'concurrent:dist',
     'ngmin',
     'copy:dist',
     'uglify',
